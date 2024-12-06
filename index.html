@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de reciclaje</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5em;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reporte de reciclaje</h1>
+        <form id="recyclingForm">
+            <div class="form-group">
+                <label for="companyName">Nombre de la empresa</label>
+                <input type="text" id="companyName" placeholder="Escribe el nombre de la empresa" required>
+            </div>
+            <div class="form-group">
+                <label for="reporterName">Persona que reporta</label>
+                <input type="text" id="reporterName" placeholder="Escribe tu nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="visitTime">Hora aproximada de visita</label>
+                <input type="time" id="visitTime" required>
+            </div>
+            <div class="form-group">
+                <label for="municipality">Municipio</label>
+                <select id="municipality" required>
+                    <option value="" disabled selected>Selecciona un municipio</option>
+                    <option value="Armenia">Armenia</option>
+                    <option value="Calarcá">Calarcá</option>
+                </select>
+            </div>
+            <button type="button" onclick="sendWhatsApp()">Enviar reporte</button>
+        </form>
+    </div>
+
+    <script>
+        function sendWhatsApp() {
+            const companyName = document.getElementById("companyName").value.trim();
+            const reporterName = document.getElementById("reporterName").value.trim();
+            const visitTime = document.getElementById("visitTime").value;
+            const municipality = document.getElementById("municipality").value;
+
+            if (!companyName || !reporterName || !visitTime || !municipality) {
+                alert("Por favor completa todos los campos.");
+                return;
+            }
+
+            let whatsappNumber = "";
+            if (municipality === "Armenia") {
+                whatsappNumber = "+573127505970";
+            } else if (municipality === "Calarcá") {
+                whatsappNumber = "+573127505970";
+            }
+
+            const message = `Hola, soy ${reporterName} de la empresa ${companyName}. Deseo reportar el reciclaje con una hora aproximada de visita a las ${visitTime} en el municipio de ${municipality}.`;
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappUrl, "_blank");
+        }
+    </script>
+</body>
+</html>
